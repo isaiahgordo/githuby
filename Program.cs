@@ -1,115 +1,66 @@
 ﻿using System.Security.Claims;
+using System.Text;
 
 namespace githuby
 {
     internal class Program
     {
         static void Main(string[] args)
-        { 
-            int i=1;
-            Console.WriteLine("Hello welcome to hangman, do you know how to play yes or no");
-            Ilisw myobj = new Ilisw();
-            myobj.Letter = Console.ReadLine().Trim().ToLower();
-            if (myobj.Letter == "no")
-                Console.WriteLine("Enter a letter press enter, then you will either see soory this letter is not in it or good job this letter is in it");
-            else if (myobj.Letter == "yes")
-            { 
-                Console.WriteLine("Ok then");
-            }
-            while (myobj.num == 0)
+        {
+            List<string> ascii = new List<string>(), word = new List<string> { "COMPUTER" };
+            string consread;
+            Random r = new Random();
+            int firstIndexOf,i=0,rum=0,indexer;
+            StringBuilder secrectWord=new StringBuilder(word[rum]);
+            bool done = false;
+            ascii.Add("  +---+");
+            ascii.Add("  |   |");
+            ascii.Add("      |");
+            ascii.Add("      |");
+            ascii.Add("      |");
+            ascii.Add("      |");
+            ascii.Add("=========");
+            StringBuilder helper = new StringBuilder(ascii[3],3);
+            firstIndexOf = ascii[1].IndexOf("| ");
+            Console.WriteLine("Do you want to play hangman?");
+            consread = Console.ReadLine().ToUpper().Trim();
+            if(consread=="YES"|consread=="Y")
             {
-                myobj.Letter = Console.ReadLine().Trim().ToLower();
-                if (myobj.secret.Contains(myobj.Letter))
-                {
-                    SecrectWord(0);
-                }
+                Console.WriteLine("Do you know how to play?");
+                consread = Console.ReadLine().ToUpper().Trim();
+                if (consread == "Y" | consread == "YES")
+                    Console.WriteLine("Okay then");
                 else
+                    Console.WriteLine("Enter a letter or what you think is the word and press enter");
+                while(done==false)
                 {
-                    myobj.num = 0;
-                    SecrectWord(i);
-                    i++;
-                }
-            }
-
-        }
-        class Ilisw
-        {
-            public string Letter;
-            public string secret = "binka";
-            public int num=0;
-        }
-        static void SecrectWord(int i)
-        {
-            Ilisw newObj = new Ilisw();
-            int at, coll = 0;
-            List<string> nuse = new List<string>(), person = new List<string>();
-            nuse.Add("  +---+");
-            nuse.Add("  |   |");
-            nuse.Add("      |");
-            nuse.Add("      |");
-            nuse.Add("      |");
-            nuse.Add("  0   |");
-            nuse.Add(" /|\\  |");
-            nuse.Add(" / \\  |");
-            nuse.Add("      |");
-            nuse.Add("=========");
-            while (newObj.num == 0)
-            {
-                if (i == 0)
-                {
-                    for (at = 0; at < nuse.Count(); at++)
+                    consread = Console.ReadLine().ToUpper().Trim();
+                    indexer = word[rum].IndexOf(consread);
+                    if (word[rum] == consread)
                     {
-                        if (at > 3|at==nuse.Count()-1)
-                        {
-                            Console.WriteLine(nuse[at]);
-                        }
+                        Console.WriteLine("You win, play again?");
+                        consread = Console.ReadLine().Trim().ToUpper();
+                        if (consread == "Y" | consread == "YES")
+                            Console.WriteLine("Yay");
+                        else
+                            done = true;
                     }
-                    Console.WriteLine("hkhkkh");
-                }
-                else if(i == 1)
-                {
-                    for (at = 0; at < nuse.Count(); at++)
+                    else if (word[rum].Contains(consread))
                     {
-                        if (at <= 1 | at >= nuse.Count() - 1)
-                            Console.WriteLine(nuse[at]);
-                        else if (at == 2 && coll == 0)
-                        {
-                            nuse.RemoveAt(at);
-                            Console.WriteLine(nuse[4]);
-                            coll = 1;
-                        }
+                        secrectWord[indexer]=Convert.ToChar(consread);
                     }
-                    Console.WriteLine("gjgjgj");
-                }
-                else if(i==2)
-                {
-                    for (at = 0; at < nuse.Count(); at++)
+                    else
+                        i++;
+                    if(i==0)
                     {
-                        if (at <= 2 | at >= nuse.Count() - 1)
-                            Console.WriteLine(nuse[at]);
-                        else if(at == 2)
-                        {
-                            nuse.RemoveAt(at);
-                            Console.WriteLine(nuse[4]);
-                        }
+                        
                     }
-                    Console.WriteLine("hllhlhlh");
-                }
-                else if(i==3)
-                {
-                    for (at = 0; at < nuse.Count(); at++)
+                    else if(i==1)
                     {
-                        if (at <= 2 | at >= nuse.Count() - 1)
-                            Console.WriteLine(nuse[at]);
-                        else if (at == 2)
-                        {
-                            nuse.RemoveAt(at);
-                            Console.WriteLine(nuse[4]);
-                        }
+                        
                     }
-                    Console.WriteLine("dgdgdgdgdg");
-                    newObj.num = 1;
                 }
+                Console.WriteLine("Bye");
             }
         }
     }
